@@ -42,8 +42,9 @@ public class Reserva {
     }
 
     public void verificarNumeroDias(int dias){
-        if(dias <= 0){
-            throw new ReservaInvalidaException("O número da reserva menor ou igual a 0");
+        if(dias < 1){
+            throw new ReservaInvalidaException("O número da reserva menor que 1");
         }
+
     }
 }
