@@ -14,6 +14,7 @@ public class Reserva {
     public Reserva(Cliente cliente, Carro carro, int dias) {
         this.cliente = cliente;
         this.carro = carro;
+        verificarNumeroDias(dias);
         this.dias = dias;
     }
 
@@ -39,6 +40,12 @@ public class Reserva {
 
     public void setDias(int dias) {
         this.dias = dias;
+    }
+
+
+    public double calcularValorTotal(int dias){
+        double valorReserva = carro.calcularValorAluguel(dias);
+        return valorReserva;
     }
 
     public void verificarNumeroDias(int dias){

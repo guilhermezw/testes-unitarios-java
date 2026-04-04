@@ -25,7 +25,7 @@ public class ReservaTest {
         try{
             // 1. Cenário
 
-            Reserva reserva = new Reserva(cliente , carro , 2);
+            Reserva reserva = new Reserva(cliente , carro , 0);
 
             // 2. Execução
             reserva.verificarNumeroDias(reserva.getDias());
@@ -48,5 +48,19 @@ public class ReservaTest {
         // JUnit
        Assertions.assertThrows(ReservaInvalidaException.class, () -> new Reserva(cliente , carro , 0));
        Assertions.assertDoesNotThrow(() -> new Reserva(cliente , carro , 1));
+
+       // AssertJ
+        var erro = catchThrowable(() -> new Reserva(cliente , carro , 0));
+        assertThat(erro)
+                .isInstanceOf(ReservaInvalidaException.class)
+                .hasMessage("O número da reserva menor que 1");
+    }
+
+    @Test
+    void deveCalcularValorDaReserva(){
+        Reserva reserva = new Reserva(cliente , carro , 2);
+
+        double total = reserva.calcularValorTotal(reserva.getDias());
+        assertThat(total).isEqualTo(200);
     }
 }
