@@ -12,15 +12,18 @@ public class CarroEntity {
 
     private String modelo;
 
-    private double valorDia;
+    private double valorDiaria;
+
+    private int ano;
 
     public CarroEntity() {
     }
 
-    public CarroEntity(Long id, String modelo, double valorDia) {
+    public CarroEntity(Long id, String modelo, double valorDiaria, int ano) {
         this.id = id;
         this.modelo = modelo;
-        this.valorDia = valorDia;
+        this.valorDiaria = valorDiaria;
+        this.ano = ano;
     }
 
     public Long getId() {
@@ -39,11 +42,19 @@ public class CarroEntity {
         this.modelo = modelo;
     }
 
-    public double getValorDia() {
-        return valorDia;
+    public double getValorDiaria() {
+        return valorDiaria;
     }
 
-    public void setValorDia(double valorDia) {
-        this.valorDia = valorDia;
+    public void setValorDiaria(double valorDiaria) {
+        this.valorDiaria = valorDiaria;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
     }
 }
