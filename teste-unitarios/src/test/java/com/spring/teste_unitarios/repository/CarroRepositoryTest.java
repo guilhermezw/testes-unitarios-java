@@ -26,7 +26,7 @@ class CarroRepositoryTest {
     @BeforeEach
     void setUp(){
         carro = new CarroEntity();
-        carro.setModelo("Volkswagen");
+        carro.setModelo("Suv");
         carro.setValorDiaria(200.0);
         carro.setAno(2020);
     }
@@ -51,7 +51,7 @@ class CarroRepositoryTest {
         Optional<CarroEntity> carroEncontrado = carroRepository.findById(carroCriado.getId());
 
         assertThat(carroEncontrado).isPresent();
-        assertThat(carroEncontrado.get().getModelo()).isEqualTo("Volkswagen");
+        assertThat(carroEncontrado.get().getModelo()).isEqualTo("Suv");
 
     }
 
