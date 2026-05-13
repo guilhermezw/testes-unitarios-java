@@ -28,11 +28,11 @@ public class GerenciadorDeOperacaoService {
         return operacao.executar(calc, dto);
     }
 
-    public double raizQuadrada (RaizQuadradaDTO dto) {
+    public double raizQuadrada(RaizQuadradaDTO dto) {
         return calc.raizQuadrada(dto.getRaiz());
     }
 
-    public double potencia (PotenciaDTO dto){
+    public double potencia(PotenciaDTO dto){
         return calc.potencia(dto.getBase() , dto.getExpoente());
     }
 
