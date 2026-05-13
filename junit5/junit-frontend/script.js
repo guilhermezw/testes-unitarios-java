@@ -1,15 +1,9 @@
-/* =============================================
-   CALCAPI — script.js
-   Base: http://localhost:8080/calculadora
-   ============================================= */
+
 
 "use strict";
 
-// ─── Config ──────────────────────────────────────────────
 
 const API_PREFIX = "/calculadora";
-
-// ─── Utilitários ─────────────────────────────────────────
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
@@ -75,7 +69,6 @@ function setLoading(btn, loading) {
   }
 }
 
-// ─── Fetch genérico ──────────────────────────────────────
 
 async function apiFetch(method, path, body) {
   const url = apiUrl(path);
@@ -98,7 +91,6 @@ async function apiFetch(method, path, body) {
   return json;
 }
 
-// ─── TABS ────────────────────────────────────────────────
 
 $$(".tab").forEach((tab) => {
   tab.addEventListener("click", () => {
@@ -110,7 +102,6 @@ $$(".tab").forEach((tab) => {
   });
 });
 
-// ─── Op Buttons (toggle seleção) ─────────────────────────
 
 function setupOpButtons(containerSel) {
   $$(containerSel + " .op-btn").forEach((btn) => {
@@ -124,9 +115,6 @@ function setupOpButtons(containerSel) {
 setupOpButtons("#tab-operacoes");
 setupOpButtons("#tab-porcentagem");
 
-// ─── 1. POST /calculadora/{operacao} ─────────────────────
-// Body: { numeroA, numeroB }
-// Enum: SOMAR | SUBTRACAO | MULTIPLICACAO | DIVISAO
 
 $("#btn-operacao").addEventListener("click", async () => {
   const btn = $("#btn-operacao");
@@ -158,9 +146,6 @@ $("#btn-operacao").addEventListener("click", async () => {
   }
 });
 
-// ─── 2. POST /calculadora/porcentagem/{tipo} ─────────────
-// Body: { percentual, valor }
-// Enum: DE | PERCENTUAL | AUMENTAR | DIMINUIR
 
 $("#btn-porcentagem").addEventListener("click", async () => {
   const btn = $("#btn-porcentagem");
@@ -187,8 +172,7 @@ $("#btn-porcentagem").addEventListener("click", async () => {
   }
 });
 
-// ─── 3. POST /calculadora/raiz-quadrada ──────────────────
-// Body: { raiz }  (>= 0)
+
 
 $("#btn-raiz").addEventListener("click", async () => {
   const btn = $("#btn-raiz");
@@ -212,8 +196,7 @@ $("#btn-raiz").addEventListener("click", async () => {
   }
 });
 
-// ─── 4. POST /calculadora/potencia ───────────────────────
-// Body: { base, expoente }
+
 
 $("#btn-potencia").addEventListener("click", async () => {
   const btn = $("#btn-potencia");
@@ -238,8 +221,6 @@ $("#btn-potencia").addEventListener("click", async () => {
   }
 });
 
-// ─── 5. GET /calculadora/historicos ──────────────────────
-// Response: [{ id, calculo, operacao, resultado }]
 
 $("#btn-historico").addEventListener("click", async () => {
   const btn = $("#btn-historico");
@@ -293,7 +274,6 @@ $("#btn-historico").addEventListener("click", async () => {
   }
 });
 
-// ─── Enter para calcular ──────────────────────────────────
 
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Enter") return;
@@ -303,8 +283,6 @@ document.addEventListener("keydown", (e) => {
   if (btn && !btn.classList.contains("loading")) btn.click();
 });
 
-// ─── 6. DELETE /calculadora/deletar-historicos ───────────
-// Response: { messege: string, success: boolean }
 
 $("#btn-deletar").addEventListener("click", async () => {
   const btn = $("#btn-deletar");
