@@ -1,42 +1,177 @@
 package com.spring.junit5.service;
 
-import com.spring.junit5.dto.NumeroDTO;
-import com.spring.junit5.dto.RaizQuadradaDTO;
-import com.spring.junit5.exception.ErroAoCalcular;
-import com.spring.junit5.model.CalculadoraModel;
+import com.spring.junit5.enums.Operacao;
+import com.spring.junit5.exception.ErroAoCalcularException;
+import com.spring.junit5.model.HistoricoOperacaoModel;
+import com.spring.junit5.repository.HistoricoOperacaoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class CalculadoraService {
 
+    private final HistoricoOperacaoRepository historicoOperacaoRepository;
 
-    public double soma (NumeroDTO dto){
-        CalculadoraModel calc = new CalculadoraModel();
-        return calc.soma(dto.getNumeroA(), dto.getNumeroB());
+    public CalculadoraService(HistoricoOperacaoRepository historicoOperacaoRepository) {
+        this.historicoOperacaoRepository = historicoOperacaoRepository;
     }
 
-    public double subtrair (NumeroDTO dto){
-        CalculadoraModel calc = new CalculadoraModel();
-        return calc.subtrair(dto.getNumeroA() , dto.getNumeroB());
+
+    public double somar(Double a, Double b) {
+        double resultado = a + b;
+
+        salvarHistorico(
+                Operacao.SOMAR,
+                "Soma: " + a + " + " + b,
+                resultado
+        );
+
+        return resultado;
     }
 
-    public double multiplicar (NumeroDTO dto){
-        CalculadoraModel calc = new CalculadoraModel();
-        return calc.multiplicar(dto.getNumeroA() , dto.getNumeroB());
+    public double subtrair(Double a, Double b) {
+        double resultado = a - b;
+
+        salvarHistorico(
+                Operacao.SUBTRACAO,
+                "Subtração: " + a + " - " + b,
+                resultado
+        );
+
+        return resultado;
     }
 
-    public double dividir (NumeroDTO dto){
-        CalculadoraModel calc = new CalculadoraModel();
+    public double multiplicar(Double a, Double b) {
+        double resultado = a * b;
 
-        if (dto.getNumeroA() == 0 || dto.getNumeroB() == 0){
-            throw new ErroAoCalcular("A divisão por zero não possui resultado definido no conjunto dos números reais.");
+        salvarHistorico(
+                Operacao.MULTIPLICACAO,
+                "Multiplicação: " + a + " * " + b,
+                resultado
+        );
+
+        return resultado;
+    }
+
+    public double dividir(Double a, Double b) {
+        if (b == 0) {
+            throw new ErroAoCalcularException(
+                    "Não é possível dividir por zero."
+            );
         }
 
-        return calc.dividir(dto.getNumeroA(), dto.getNumeroB());
+        double resultado = a / b;
+
+        salvarHistorico(
+                Operacao.DIVISAO,
+                "Divisão: " + a + " / " + b,
+                resultado
+        );
+
+        return resultado;
     }
 
-    public double raizQuadrada (RaizQuadradaDTO dto) {
-        CalculadoraModel calc = new CalculadoraModel();
-        return calc.raizQuadrada(dto.getRaiz());
+
+    public double raizQuadrada(Double valor) {
+
+        if (valor < 0) {
+            throw new ErroAoCalcularException(
+                    "Não existe raiz quadrada real de número negativo."
+            );
+        }
+
+        double resultado = Math.sqrt(valor);
+
+        salvarHistorico(
+                Operacao.RAIZ_QUADRADA,
+                "Raiz quadrada de " + valor,
+                resultado
+        );
+
+        return resultado;
+    }
+
+    public double potencia(Double a, Double b) {
+
+        double resultado = Math.pow(a, b);
+
+        salvarHistorico(
+                Operacao.POTENCIA,
+                "Potência: " + a + " ^ " + b,
+                resultado
+        );
+
+        return resultado;
+    }
+
+
+    public double porcentagemDe(Double percentual, Double valor) {
+
+        double resultado = (percentual / 100.0) * valor;
+
+        salvarHistorico(
+                Operacao.PORCENTAGEM,
+                percentual + "% de " + valor,
+                resultado
+        );
+
+        return resultado;
+    }
+
+    public double percentualQueRepresenta(Double parte, Double total) {
+
+        if (total == 0) {
+            throw new ErroAoCalcularException(
+                    "Não é possível dividir por zero."
+            );
+        }
+
+        double resultado = (parte / total) * 100.0;
+
+        salvarHistorico(
+                Operacao.PORCENTAGEM,
+                parte + " representa quanto % de " + total,
+                resultado
+        );
+
+        return resultado;
+    }
+
+    public double aumentarPorcentagem(Double percentual, Double valor) {
+
+        double resultado = valor + (valor * percentual / 100.0);
+
+        salvarHistorico(
+                Operacao.PORCENTAGEM,
+                "Aumentar " + valor + " em " + percentual + "%",
+                resultado
+        );
+
+        return resultado;
+    }
+
+    public double diminuirPorcentagem(Double percentual, Double valor) {
+
+        double resultado = valor - (valor * percentual / 100.0);
+
+        salvarHistorico(
+                Operacao.PORCENTAGEM,
+                "Diminuir " + valor + " em " + percentual + "%",
+                resultado
+        );
+
+        return resultado;
+    }
+
+
+    private void salvarHistorico(Operacao operacao, String calculo, Double resultado) {
+
+        HistoricoOperacaoModel historico = new HistoricoOperacaoModel();
+        historico.setOperacao(operacao);
+        historico.setCalculo(calculo);
+        historico.setResultado(resultado);
+
+        historicoOperacaoRepository.save(historico);
     }
 }
