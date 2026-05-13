@@ -13,21 +13,21 @@ public enum TipoPorcentagem {
     AUMENTAR("aumentar"),
     DIMINUIR("diminuir");
 
-    private final String valor;
+    private final String value;
 
-    TipoPorcentagem(String valor) {
-        this.valor = valor;
+    TipoPorcentagem(String value) {
+        this.value = value;
     }
 
     @JsonValue
-    public String getValor() {
-        return valor;
+    public String getValue() {
+        return value;
     }
 
     @JsonCreator
     public static TipoPorcentagem from(String value) {
         for (TipoPorcentagem tipo : values()) {
-            if (tipo.valor.equalsIgnoreCase(value)) {
+            if (tipo.value.equalsIgnoreCase(value)) {
                 return tipo;
             }
         }
@@ -35,7 +35,7 @@ public enum TipoPorcentagem {
     }
 
     @Component
-    public class StringToTipoPorcentagemConverter implements Converter<String, TipoPorcentagem> {
+    public static class StringTipoPorcentagemConverter implements Converter<String, TipoPorcentagem> {
 
         @Override
         public TipoPorcentagem convert(String value) {

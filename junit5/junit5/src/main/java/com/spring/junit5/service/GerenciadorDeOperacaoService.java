@@ -52,4 +52,8 @@ public class GerenciadorDeOperacaoService {
                 .map(historicoOperacaoMapper::toResponseDto)
                 .toList();
     }
+
+    public void deletarHistoricoOperacoes(){
+        historicoOperacaoRepository.deleteAll();
+    }
 }

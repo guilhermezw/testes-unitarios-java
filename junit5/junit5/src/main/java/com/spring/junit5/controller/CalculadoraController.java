@@ -51,6 +51,12 @@ public class CalculadoraController {
         return ResponseEntity.status(HttpStatus.OK).body(gerenciadorDeOperacaoService.historicoOperacoes());
     }
 
+    @DeleteMapping("/deletar-historicos")
+    public ResponseEntity<Map<String , Object>> deletarHistoricoOperacoes(){
+        gerenciadorDeOperacaoService.deletarHistoricoOperacoes();
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of("messege" , "Historico deletado" , "success" , true));
+    }
+
 
 
 }

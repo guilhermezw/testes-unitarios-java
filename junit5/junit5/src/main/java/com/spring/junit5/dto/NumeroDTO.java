@@ -3,6 +3,7 @@ package com.spring.junit5.dto;
 import jakarta.validation.constraints.NotNull;
 
 public class NumeroDTO {
+
     @NotNull(message = "Número A é obrigatório")
     private Double numeroA;
     @NotNull(message = "Número A é obrigatório")
