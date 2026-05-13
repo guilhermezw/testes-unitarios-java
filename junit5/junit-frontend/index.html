@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CalcAPI — Calculadora</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="scanlines"></div>
+  <div class="noise"></div>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-bracket">[</span>
+        CALC<span class="logo-accent">API</span>
+        <span class="logo-bracket">]</span>
+      </div>
+      <div class="api-config">
+        <label for="baseUrl">BASE URL</label>
+        <input type="text" id="baseUrl" value="http://localhost:8080" placeholder="http://localhost:8080" />
+        <div class="status-dot" id="statusDot"></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- TABS -->
+    <nav class="tabs">
+      <button class="tab active" data-tab="operacoes">Operações</button>
+      <button class="tab" data-tab="porcentagem">Porcentagem</button>
+      <button class="tab" data-tab="raiz">Raiz Quadrada</button>
+      <button class="tab" data-tab="potencia">Potência</button>
+      <button class="tab" data-tab="historico">Histórico</button>
+    </nav>
+
+    <!-- PANEL: OPERAÇÕES BÁSICAS -->
+    <section class="panel active" id="tab-operacoes">
+      <div class="panel-header">
+        <span class="endpoint-badge">POST</span>
+        <code>/{operacao}</code>
+        <p class="panel-desc">Soma, subtração, multiplicação e divisão entre dois números.</p>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Número A</label>
+          <input type="number" id="op-numA" placeholder="0" step="any" />
+        </div>
+        <div class="field">
+          <label>Número B</label>
+          <input type="number" id="op-numB" placeholder="0" step="any" />
+        </div>
+        <div class="field full">
+          <label>Operação</label>
+          <div class="op-buttons">
+            <button class="op-btn active" data-op="SOMAR">＋ Somar</button>
+            <button class="op-btn" data-op="SUBTRACAO">－ Subtração</button>
+            <button class="op-btn" data-op="MULTIPLICACAO">✕ Multiplicação</button>
+            <button class="op-btn" data-op="DIVISAO">÷ Divisão</button>
+          </div>
+        </div>
+      </div>
+      <button class="calc-btn" id="btn-operacao">CALCULAR</button>
+      <div class="result-box" id="res-operacao"></div>
+    </section>
+
+    <!-- PANEL: PORCENTAGEM -->
+    <section class="panel" id="tab-porcentagem">
+      <div class="panel-header">
+        <span class="endpoint-badge">POST</span>
+        <code>/porcentagem/{tipo}</code>
+        <p class="panel-desc">Cálculos percentuais: de, percentual, aumentar e diminuir.</p>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Percentual (%)</label>
+          <input type="number" id="pct-percentual" placeholder="0" step="any" />
+        </div>
+        <div class="field">
+          <label>Valor Base</label>
+          <input type="number" id="pct-valor" placeholder="0" step="any" />
+        </div>
+        <div class="field full">
+          <label>Tipo</label>
+          <div class="op-buttons">
+            <button class="op-btn active" data-tipo="DE">DE</button>
+            <button class="op-btn" data-tipo="PERCENTUAL">PERCENTUAL</button>
+            <button class="op-btn" data-tipo="AUMENTAR">AUMENTAR</button>
+            <button class="op-btn" data-tipo="DIMINUIR">DIMINUIR</button>
+          </div>
+        </div>
+      </div>
+      <button class="calc-btn" id="btn-porcentagem">CALCULAR</button>
+      <div class="result-box" id="res-porcentagem"></div>
+    </section>
+
+    <!-- PANEL: RAIZ QUADRADA -->
+    <section class="panel" id="tab-raiz">
+      <div class="panel-header">
+        <span class="endpoint-badge">POST</span>
+        <code>/raiz-quadrada</code>
+        <p class="panel-desc">Calcula a raiz quadrada de um número (≥ 0).</p>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Número</label>
+          <input type="number" id="raiz-num" placeholder="0" step="any" min="0" />
+        </div>
+      </div>
+      <button class="calc-btn" id="btn-raiz">CALCULAR</button>
+      <div class="result-box" id="res-raiz"></div>
+    </section>
+
+    <!-- PANEL: POTÊNCIA -->
+    <section class="panel" id="tab-potencia">
+      <div class="panel-header">
+        <span class="endpoint-badge">POST</span>
+        <code>/potencia</code>
+        <p class="panel-desc">Calcula base elevada ao expoente.</p>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Base</label>
+          <input type="number" id="pot-base" placeholder="0" step="any" />
+        </div>
+        <div class="field">
+          <label>Expoente</label>
+          <input type="number" id="pot-expoente" placeholder="0" step="any" />
+        </div>
+      </div>
+      <button class="calc-btn" id="btn-potencia">CALCULAR</button>
+      <div class="result-box" id="res-potencia"></div>
+    </section>
+
+    <!-- PANEL: HISTÓRICO -->
+    <section class="panel" id="tab-historico">
+      <div class="panel-header">
+        <span class="endpoint-badge get">GET</span>
+        <code>/historicos</code>
+        <p class="panel-desc">Consulta o histórico de todas as operações realizadas.</p>
+      </div>
+      <div class="btn-row">
+        <button class="calc-btn" id="btn-historico">CARREGAR HISTÓRICO</button>
+        <button class="calc-btn danger" id="btn-deletar">DELETAR HISTÓRICO</button>
+      </div>
+      <div class="history-table-wrap" id="res-historico"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>CalcAPI</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
