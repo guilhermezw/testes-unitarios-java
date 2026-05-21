@@ -1,5 +1,6 @@
 package com.spring.login.service;
 
+import com.spring.login.exception.custom.UsuarioNaoAutenticadoException;
 import com.spring.login.model.UsuarioModel;
 import com.spring.login.repository.UsuarioRepository;
 import com.spring.login.security.SecurityUtils;
@@ -20,6 +21,6 @@ public class AutenticacaoService {
     public UsuarioModel getUsuarioAutenticado(){
         UUID id = SecurityUtils.getUsuarioId();
         return usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário autenticado não encontrado"));
+                .orElseThrow(() -> new UsuarioNaoAutenticadoException("Usuário autenticado não encontrado"));
     }
 }

@@ -1,5 +1,6 @@
 package com.spring.login.security;
 
+import com.spring.login.exception.custom.UsuarioNaoAutenticadoException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,6 @@ public class SecurityUtils {
             String usuarioId = jwt.getSubject();
             return UUID.fromString(usuarioId);
         }
-        throw new RuntimeException ("Usuário não autenticado");
+        throw new UsuarioNaoAutenticadoException ("Usuário não autenticado");
     }
 }

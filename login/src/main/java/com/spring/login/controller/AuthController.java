@@ -1,8 +1,12 @@
 package com.spring.login.controller;
 
+import com.spring.login.annotation.RateLimited;
 import com.spring.login.dto.CadastroRequestDTO;
 import com.spring.login.dto.LoginRequestDTO;
 import com.spring.login.service.AuthService;
+import com.spring.login.service.RateLimitingService;
+import io.github.bucket4j.Bucket;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +22,16 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+    private final RateLimitingService rateLimitingService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, RateLimitingService rateLimitingService) {
         this.authService = authService;
+        this.rateLimitingService = rateLimitingService;
     }
 
+    @RateLimited(message = "Muitas tentativas de login. Tente novamente em alguns minutos.")
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody @Valid LoginRequestDTO dto) {
+    public ResponseEntity<Map<String, Object>> login(@RequestBody @Valid LoginRequestDTO dto , HttpServletRequest request) {
         String token = authService.login(dto);
         return ResponseEntity.status(HttpStatus.OK).body(Map.of("message","Login realizado com sucesso","token" ,token));
     }

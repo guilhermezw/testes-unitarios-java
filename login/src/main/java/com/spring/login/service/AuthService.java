@@ -2,9 +2,11 @@ package com.spring.login.service;
 
 import com.spring.login.dto.CadastroRequestDTO;
 import com.spring.login.dto.LoginRequestDTO;
+import com.spring.login.exception.custom.ConflitoDeDadosException;
 import com.spring.login.model.UsuarioModel;
 import com.spring.login.repository.UsuarioRepository;
 import com.spring.login.security.JwtService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,7 +36,7 @@ public class AuthService {
 
     public UsuarioModel cadastrarUsuario (CadastroRequestDTO dto) {
         if(usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
-            throw new RuntimeException("Este email já cadastrado em outra conta");
+            throw new ConflitoDeDadosException("Este email já cadastrado em outra conta");
         }
         UsuarioModel usuario = new UsuarioModel();
         usuario.setNome(dto.getNome());
