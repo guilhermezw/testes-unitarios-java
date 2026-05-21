@@ -14,10 +14,9 @@ public class CadastroRequestDTO {
     @NotBlank(message = "O e-mail é obrigatório.")
     private String email;
 
-    @NotBlank(message = "A senha é obrigatória.")
     @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.#_-])[A-Za-z\\d@$!%*?&.#_-]{8,}$",
-            message = "A senha deve conter no mínimo 8 caracteres, uma letra maiúscula, uma minúscula, um número e um símbolo especial."
+            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.#_-])[A-Za-z\\d@$!%*?&.#_-]{10,12}$",
+            message = "A senha deve conter entre 10 e 12 caracteres, uma letra maiúscula, uma minúscula, um número e um caractere especial."
     )
     private String senha;
 
@@ -46,16 +45,16 @@ public class CadastroRequestDTO {
         this.email = email;
     }
 
-    public @NotBlank(message = "A senha é obrigatória.") @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.#_-])[A-Za-z\\d@$!%*?&.#_-]{8,}$",
-            message = "A senha deve conter no mínimo 8 caracteres, uma letra maiúscula, uma minúscula, um número e um símbolo especial."
+    public @Pattern(
+            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.#_-])[A-Za-z\\d@$!%*?&.#_-]{10,12}$",
+            message = "A senha deve conter entre 10 e 12 caracteres, uma letra maiúscula, uma minúscula, um número e um caractere especial."
     ) String getSenha() {
         return senha;
     }
 
-    public void setSenha(@NotBlank(message = "A senha é obrigatória.") @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.#_-])[A-Za-z\\d@$!%*?&.#_-]{8,}$",
-            message = "A senha deve conter no mínimo 8 caracteres, uma letra maiúscula, uma minúscula, um número e um símbolo especial."
+    public void setSenha(@Pattern(
+            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.#_-])[A-Za-z\\d@$!%*?&.#_-]{10,12}$",
+            message = "A senha deve conter entre 10 e 12 caracteres, uma letra maiúscula, uma minúscula, um número e um caractere especial."
     ) String senha) {
         this.senha = senha;
     }

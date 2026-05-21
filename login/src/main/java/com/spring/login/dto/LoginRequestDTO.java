@@ -2,7 +2,6 @@ package com.spring.login.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 
 public class LoginRequestDTO {
 
@@ -11,10 +10,6 @@ public class LoginRequestDTO {
     private String email;
 
     @NotBlank(message = "A senha é obrigatória.")
-    @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.#_-])[A-Za-z\\d@$!%*?&.#_-]{8,}$",
-            message = "A senha deve conter no mínimo 8 caracteres."
-    )
     private String senha;
 
     public LoginRequestDTO(String email, String senha) {
@@ -30,17 +25,11 @@ public class LoginRequestDTO {
         this.email = email;
     }
 
-    public @NotBlank(message = "A senha é obrigatória.") @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.#_-])[A-Za-z\\d@$!%*?&.#_-]{8,}$",
-            message = "A senha deve conter no mínimo 8 caracteres."
-    ) String getSenha() {
+    public @NotBlank(message = "A senha é obrigatória.") String getSenha() {
         return senha;
     }
 
-    public void setSenha(@NotBlank(message = "A senha é obrigatória.") @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.#_-])[A-Za-z\\d@$!%*?&.#_-]{8,}$",
-            message = "A senha deve conter no mínimo 8 caracteres."
-    ) String senha) {
+    public void setSenha(@NotBlank(message = "A senha é obrigatória.") String senha) {
         this.senha = senha;
     }
 }
