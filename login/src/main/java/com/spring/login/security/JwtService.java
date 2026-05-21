@@ -21,16 +21,9 @@ public class JwtService {
     }
 
 
-    public String generateToken(Authentication authentication){
+    public String generateToken (UsuarioModel usuario) {
         Instant now  = Instant.now();
         long expiry = 3600L;
-
-        UsuarioDetails usuario = (UsuarioDetails) authentication.getPrincipal();
-
-        List<String> role = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .map(authoridade -> authoridade.replace("ROLE_", ""))
-                .toList();
 
         var claims = JwtClaimsSet.builder()
                 .issuer("auth.login.com")
@@ -38,7 +31,7 @@ public class JwtService {
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(expiry))
                 .subject(String.valueOf(usuario.getId()))
-                .claim("role", role)
+                .claim("role", usuario.getRole())
                 .build();
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }

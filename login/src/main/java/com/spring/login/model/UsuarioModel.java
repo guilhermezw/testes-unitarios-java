@@ -1,7 +1,10 @@
 package com.spring.login.model;
 
+import com.spring.login.dto.LoginRequestDTO;
 import com.spring.login.enums.Role;
 import jakarta.persistence.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.UUID;
 
@@ -16,7 +19,7 @@ public class UsuarioModel {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
+    @Column(nullable = false , unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -28,8 +31,12 @@ public class UsuarioModel {
 
     private boolean ativo;
 
-    public UsuarioModel(UUID id, String email, String senha, Role role, boolean ativo) {
+    public UsuarioModel() {
+    }
+
+    public UsuarioModel(UUID id, String nome, String email, String senha, Role role, boolean ativo) {
         this.id = id;
+        this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.role = role;
@@ -42,6 +49,14 @@ public class UsuarioModel {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
