@@ -1,7 +1,5 @@
 package com.spring.login.enums;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-
 public enum Role {
     ADMIN("Admin"),
     GERENTE("Gerente"),
