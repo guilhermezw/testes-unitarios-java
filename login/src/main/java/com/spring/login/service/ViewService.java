@@ -14,7 +14,7 @@ public class ViewService {
         this.autenticacaoService = autenticacaoService;
     }
 
-    public String exibirMensagem (){
+    public String exibirMensagem(){
        UsuarioModel usuario = autenticacaoService.getUsuarioAutenticado();
        Role role = usuario.getRole();
        return switch (role) {
@@ -25,7 +25,7 @@ public class ViewService {
     }
 
 
-    public PerfilResponseDTO exibirMinhasInformações () {
+    public PerfilResponseDTO exibirMinhasInformações() {
         UsuarioModel usuario = autenticacaoService.getUsuarioAutenticado();
         return new PerfilResponseDTO(
                 usuario.getId(),
