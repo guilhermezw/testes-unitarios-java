@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal de Acesso</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+<div class="crt-vignette" aria-hidden="true"></div>
+
+<section id="view-login" class="view active">
+  <div class="card">
+    <div class="term-bar">
+      <span class="term-tag">System</span>
+      <span class="term-path">portal@auth:~$</span>
+      <span class="term-time" id="term-time"></span>
+    </div>
+    <div class="card-header">
+      <h1 class="card-title">Bem-vindo de volta<span class="cursor-blink">█</span></h1>
+      <p class="card-subtitle">&gt; Acesse sua conta para continuar_</p>
+    </div>
+
+    <form id="form-login" novalidate>
+      <div class="field">
+        <label for="login-email">// E-mail</label>
+        <div class="input-wrap">
+          <span class="input-prompt">&gt;</span>
+          <input type="email" id="login-email" placeholder="seu@email.com" autocomplete="email" required />
+        </div>
+        <span class="field-error" id="err-login-email"></span>
+      </div>
+
+      <div class="field">
+        <label for="login-senha">// Senha</label>
+        <div class="input-wrap">
+          <span class="input-prompt">&gt;</span>
+          <input type="password" id="login-senha" placeholder="••••••••••" autocomplete="current-password" required />
+          <button type="button" class="toggle-pw" data-target="login-senha" aria-label="Mostrar senha">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        <span class="field-error" id="err-login-senha"></span>
+      </div>
+
+      <div id="login-alert" class="alert hidden"></div>
+
+      <button type="submit" class="btn-primary" id="btn-login">
+        <span class="btn-text">[ ENTRAR ]</span>
+        <span class="btn-loader hidden">AUTENTICANDO<span class="dot-anim"></span></span>
+      </button>
+    </form>
+
+    <p class="switch-view">
+      Sem conta? &gt;
+      <button class="link-btn" data-goto="cadastro">REGISTRAR</button>
+    </p>
+  </div>
+</section>
+
+<section id="view-cadastro" class="view">
+  <div class="card card--wide">
+    <div class="term-bar">
+      <span class="term-tag">System</span>
+      <span class="term-path">portal@auth:~/novo$</span>
+      <span class="term-time" id="term-time-cad"></span>
+    </div>
+    <div class="card-header">
+      <h1 class="card-title">Criar conta<span class="cursor-blink">█</span></h1>
+      <p class="card-subtitle">&gt; Preencha os dados para se registrar_</p>
+    </div>
+
+    <form id="form-cadastro" novalidate>
+      <div class="field">
+        <label for="cad-nome">// Nome completo</label>
+        <div class="input-wrap">
+          <span class="input-prompt">&gt;</span>
+          <input type="text" id="cad-nome" placeholder="João da Silva" autocomplete="name" required />
+        </div>
+        <span class="field-error" id="err-cad-nome"></span>
+      </div>
+
+      <div class="field">
+        <label for="cad-email">// E-mail</label>
+        <div class="input-wrap">
+          <span class="input-prompt">&gt;</span>
+          <input type="email" id="cad-email" placeholder="seu@email.com" autocomplete="email" required />
+        </div>
+        <span class="field-error" id="err-cad-email"></span>
+      </div>
+
+      <div class="field">
+        <label for="cad-senha">
+          // Senha
+          <span class="label-hint">10–12 chars · A-z · 0-9 · especial</span>
+        </label>
+        <div class="input-wrap">
+          <span class="input-prompt">&gt;</span>
+          <input type="password" id="cad-senha" placeholder="••••••••••" autocomplete="new-password" required />
+          <button type="button" class="toggle-pw" data-target="cad-senha" aria-label="Mostrar senha">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        <div class="pw-strength" id="pw-strength">
+          <div class="pw-bar"><div id="pw-fill"></div></div>
+          <span id="pw-label"></span>
+        </div>
+        <span class="field-error" id="err-cad-senha"></span>
+      </div>
+
+      <div class="field">
+        <label for="cad-role">// Perfil de acesso</label>
+        <div class="input-wrap input-wrap--select">
+          <span class="input-prompt">&gt;</span>
+          <select id="cad-role" required>
+            <option value="">-- SELECIONE --</option>
+            <option value="ADMIN">ADMIN</option>
+            <option value="GERENTE">GERENTE</option>
+            <option value="CLIENTE">CLIENTE</option>
+          </select>
+        </div>
+        <span class="field-error" id="err-cad-role"></span>
+      </div>
+
+      <div id="cadastro-alert" class="alert hidden"></div>
+
+      <button type="submit" class="btn-primary" id="btn-cadastro">
+        <span class="btn-text">[ CRIAR CONTA ]</span>
+        <span class="btn-loader hidden">PROCESSANDO<span class="dot-anim"></span></span>
+      </button>
+    </form>
+
+    <p class="switch-view">
+      Já tem conta? &gt;
+      <button class="link-btn" data-goto="login">ENTRAR</button>
+    </p>
+  </div>
+</section>
+
+<section id="view-dashboard" class="view">
+  <div class="dashboard">
+    <header class="dash-header">
+      <div class="dash-brand">
+        <span class="brand-caret">&gt;_</span>
+        <span class="dash-brand-name">Terminal v1.0</span>
+      </div>
+      <div class="dash-header-right">
+        <span class="dash-status">■ ONLINE</span>
+        <button class="btn-logout" id="btn-logout">[ SAIR ]</button>
+      </div>
+    </header>
+
+    <div class="dash-body">
+      <div class="dash-card" id="card-perfil">
+        <div class="dash-card-label">// PERFIL.DAT</div>
+        <div id="perfil-loading" class="skeleton-wrap">
+          <div class="skeleton skeleton--avatar"></div>
+          <div class="skeleton-lines">
+            <div class="skeleton skeleton--line w60"></div>
+            <div class="skeleton skeleton--line w40"></div>
+            <div class="skeleton skeleton--line w50"></div>
+          </div>
+        </div>
+        <div id="perfil-content" class="perfil-content hidden">
+          <div class="avatar" id="avatar-inicial"></div>
+          <div class="perfil-info">
+            <h2 class="perfil-nome" id="perfil-nome"></h2>
+            <p class="perfil-email" id="perfil-email"></p>
+            <span class="role-badge" id="perfil-role"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dash-card" id="card-mensagem">
+        <div class="dash-card-label">// MSG_SERVIDOR.LOG</div>
+        <div id="msg-loading" class="skeleton-wrap">
+          <div class="skeleton-lines" style="width:100%">
+            <div class="skeleton skeleton--line w80"></div>
+            <div class="skeleton skeleton--line w60"></div>
+          </div>
+        </div>
+        <p class="server-msg hidden" id="server-msg"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
